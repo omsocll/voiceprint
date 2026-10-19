@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ee">
+  <title>Voiceprint — write like yourself</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Voiceprint home"><span class="mark">v.</span> voiceprint</a>
+    <div class="top-actions"><span class="privacy"><i></i> Sent to Gemini only when you ask</span><button class="settings-toggle" id="settings-toggle" aria-expanded="false" aria-controls="settings">⚙ <span>Settings</span></button></div>
+  </header>
+  <main id="top">
+    <section class="intro">
+      <p class="kicker">YOUR WORDS, YOUR WAY</p>
+      <h1>Sound more like <em>yourself.</em></h1>
+      <p class="intro-copy">Teach Voiceprint how you write, then bring that voice to whatever comes next.</p>
+    </section>
+
+    <section class="settings-panel hidden" id="settings" aria-label="Settings">
+      <div><div class="section-label">Gemini API key</div><p class="hint">Stored only in this browser. Sent directly to Google when you make a request.</p></div>
+      <div class="key-entry"><input id="api-key" type="password" autocomplete="off" placeholder="Paste your Gemini API key" aria-label="Gemini API key"><button id="save-key" class="button small">Save key</button></div>
+      <a class="key-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer">Get a key from Google AI Studio ↗</a>
+      <p class="key-state" id="key-state" aria-live="polite"></p>
+    </section>
+
+    <div class="workspace">
+      <section class="card samples-card">
+        <div class="card-head"><div class="step">01</div><div><p class="section-label">Your writing</p><h2>Give your voice a starting point</h2></div></div>
+        <p class="hint lead-hint">Add 2–5 pieces you wrote. Longer samples help us pick up your natural rhythm.</p>
+        <div id="samples" class="samples-list"></div>
+        <div class="sample-actions"><button class="text-button" id="add-sample">＋ Add another sample</button><label class="text-button upload-button" for="file-input">↑ Upload .txt files</label><input id="file-input" type="file" accept=".txt,text/plain" multiple hidden></div>
+        <div class="card-footer"><span class="hint" id="sample-count">1 of 5 samples</span><button class="button primary" id="analyze">Build my voice profile <span>→</span></button></div>
+        <p class="status" id="analyze-status" aria-live="polite"></p>
+      </section>
+
+      <section class="card profile-card">
+        <div class="card-head"><div class="step">02</div><div><p class="section-label">Your voice profile</p><h2>A portrait made of words</h2></div></div>
+        <div class="profile-switcher"><label for="profile-select">Profile</label><select id="profile-select" aria-label="Choose voice profile"></select><button class="text-button" id="new-profile">＋ New profile</button></div>
+        <p class="hint lead-hint">Review and edit anything that doesn’t sound right. Your changes are saved here.</p>
+        <div id="profile-preview" class="profile-preview empty-profile">Your voice profile will appear here after you add samples and build it…</div>
+        <textarea id="profile" class="profile-editor hidden" placeholder="Edit your voice profile…" aria-label="Editable voice profile" spellcheck="true"></textarea>
+        <div class="card-footer profile-footer"><span class="save-state" id="profile-state">No profile saved yet</span><div class="profile-actions"><button class="button secondary" id="edit-profile">Edit profile</button><button class="button secondary hidden" id="save-profile">Save changes</button></div></div>
+      </section>
+    </div>
+
+    <section class="card write-card">
+      <div class="card-head"><div class="step">03</div><div><p class="section-label">Write in your voice</p><h2>What are we writing today?</h2></div></div>
+      <div class="write-controls"><label class="brief-label" for="brief">Topic or brief<textarea id="brief" placeholder="e.g. essay question: Is inflation the Fed's fault?"></textarea></label><div class="write-options"><label for="length">Length<select id="length"><option value="short">Short · 150–250 words</option><option value="medium" selected>Medium · 400–600 words</option><option value="long">Long · 800–1,000 words</option></select></label><label for="format">Format<select id="format"><option>Choose for me</option><option>Essay</option><option>Article</option><option>Newsletter</option><option>Blog post</option><option>Social post</option><option>Email</option></select></label><div class="strength-control"><span class="strength-label">Voice strength</span><div class="segmented" role="group" aria-label="Voice strength"><button type="button" data-strength="subtle" aria-pressed="false">Subtle</button><button type="button" data-strength="balanced" aria-pressed="true">Balanced</button><button type="button" data-strength="full" aria-pressed="false">Full character</button></div></div><button class="button primary generate" id="generate">Write in my voice <span>→</span></button></div></div>
+      <p class="status" id="generate-status" aria-live="polite"></p>
+    </section>
+
+    <section class="comparison hidden" id="comparison">
+      <div class="comparison-heading"><div><p class="section-label">The voice check</p><h2>Side by side</h2></div><label class="source-select">Compare with<select id="compare-sample"></select></label></div>
+      <div class="compare-grid"><article class="compare-pane"><div class="pane-label"><span class="dot dot-sample"></span> YOUR ORIGINAL <span id="original-title" class="pane-title"></span></div><div class="pane-content" id="original-content"></div></article><article class="compare-pane generated-pane"><div class="pane-label"><span class="dot dot-generated"></span> YOUR NEW PIECE <button class="copy-button" id="copy-output">Copy</button><button class="copy-button" id="regenerate" disabled>Regenerate</button></div><div class="output-meta"><span id="word-count" aria-live="polite">0 words · target 400–600</span><button class="adjust-button hidden" id="adjust-length">Adjust length</button></div><div class="pane-content" id="generated-content"></div></article></div>
+    </section>
+    <footer><span class="wordmark small-mark"><span class="mark">v.</span> voiceprint</span><span>Made for the way you write.</span></footer>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
