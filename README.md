@@ -12,9 +12,17 @@ A browser-only AI writing tool that learns your voice. Paste 2–5 samples of yo
 
 Other features: multiple named profiles, `.txt` upload, length/format/voice-strength controls, and regenerate.
 
-## Privacy
+## Privacy and your API key
 
 You bring your own Gemini API key. It is stored only in your browser's localStorage and sent directly to Google in the `x-goog-api-key` header. There is no backend. Requests set `store: false`.
+
+What that means in practice:
+
+- **It's your own key.** Voiceprint never ships with a key; each user pastes their own. Nothing is sent to me or any server other than Google's Gemini API.
+- **It's stored locally, in plain text.** localStorage is readable by anything running on the same origin and by anyone with access to your browser profile. Use it on your own device, and clear it (or remove the key in Settings / clear site data) on shared computers.
+- **Limit the blast radius.** Create a dedicated key in Google AI Studio for this app, restrict it to the Gemini API, set a quota/budget, and delete it if you think it leaked.
+- **Hardening:** the page sets a strict Content-Security-Policy (only its own scripts, network requests only to `generativelanguage.googleapis.com`) and renders model output with escaping, which reduces the chance of injected code reading the key.
+- If you deploy this publicly, a server-side proxy holding the key would be safer than bring-your-own-key in the browser, but it would cost you API credits.
 
 ## Tech stack
 
